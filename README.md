@@ -1,4 +1,4 @@
-# Scraping Hn 1 Building Objects 
+# Scraping Hacker News
  
 ##Learning Competencies 
 - Install a gem
