@@ -1,20 +1,24 @@
 # Scraping Hn 1 Building Objects 
  
 ##Learning Competencies 
+- Install a gem
+- Use the Nokogiri gem to parse CSS elements 
+- Map data within a given object (ie Nokogiri object) to a customized object
+- Use ARGV to take in user input from the command line
+- Use the OpenURI built-in module to open and read live URLs
 
 ##Summary 
 
  We're going to write a simple [Hacker News](http://news.ycombinator.com) scraper.  We have to be polite, though: if we're too aggressive we'll get the DBC network banned.
 
-We're going to build Ruby classes that represents a particular Hacker News comment thread.
+We're going to build Ruby classes that represents a particular Hacker News comment thread.  The main goal is to translate a pre-existing object model &mdash; in this case, Hacker News' model &mdash; into one that's easy for us to manipulate.
 
-## Learning Goals
 
-The main goal is to learn how to translate a pre-existing object model &mdash; in this case, Hacker News' model &mdash; into one that's easy for us to manipulate.
+##Releases
 
-## Objectives
+###Release 0: Objectifying a static Hacker News page 
 
-### Save a HTML Page
+#### Save a HTML Page
 
 First, we're going to save a specific post as a plain HTML file for us to practice on.  As we're developing a scraper we'll be tempted to hammer the HN servers, which will almost certainly get everyone temporarily banned.  We'll use the local HTML file to get the scraper working before we create a "live" version.
 
@@ -31,7 +35,7 @@ Visit the Hacker News homepage and click through to a specific post.  If you can
 
    This will create a `post.html` file which contains the HTML from the URL you entered.  You're free to enter another URL.
 
-### Playing around with Nokogiri
+#### Playing around with Nokogiri
 
 First, make sure the `nokogiri` gem is installed.  We'll use this to parse the HTML file.  You can test this by running `irb` and typing
 
@@ -39,7 +43,7 @@ First, make sure the `nokogiri` gem is installed.  We'll use this to parse the H
 require 'nokogiri'
 ```
 
-If you get an error that means Nokogiri is not installed.  Install it by running this command:
+If you get an error that means Nokogiri is not installed, install it by running this command:
 
 ```text
 $ gem install nokogiri
@@ -65,7 +69,7 @@ def extract_usernames(doc)
 end
 ```
 
-*This might be your first run-in with [CSS selectors](http://css.maxdesign.com.au/selectutorial/).  Don't be afraid!*
+*Remember [CSS selectors](http://css.maxdesign.com.au/selectutorial/)?  You don't need to fully understand all the elements here, but a refresher could help!*
 
 What do these other Nokogiri calls return?  
 
@@ -88,7 +92,7 @@ Make sure you open up the html page in your browser and poke around the source c
 **Choose at least one other attribute to add for your comments class.  What other comment-related data from the html page can you include?  Figure out your own Nokogiri call to pull in the data.**
 
 
-### Creating Your Object Model
+#### Creating Your Object Model
 
 We want two classes: `Post` and `Comment`.  A post has many comments and each comment belongs to exactly one post.  Let's build the `Post` class so it has the following attributes: `title`, `url`, `points`, and `item_id`, corresponding to the title on Hacker News, the URL the post points to, the number of points the post currently has, and the post's Hacker News item ID, respectively.
 
@@ -111,7 +115,10 @@ We now need code which does the following:
 
 Ship it!
 
-### Command line + parsing the actual Hacker News
+
+###Release 1: Objectify a live Hacker News page 
+
+#### Command line + parsing the actual Hacker News
 
 We're going to learn two new things: the basics of parsing command-line arguments and how to fetch HTML for a website using Ruby.  We want to end up with a command-line program that works like this:
 
@@ -137,9 +144,12 @@ This captures the html from that URL as a `StringIO` object, which NokoGiri acce
 
 Combine these two facts to let the user pass a URL into your program, parse the given Hacker News URL into objects, and print out some useful information for the user. 
 
-##Releases
-###Release 0 
-
-##Optimize Your Learning 
 
 ##Resources
+* [Nokogiri documentation about parsing an HTML document](http://nokogiri.org/tutorials/parsing_an_html_xml_document.html)
+* [Parsing HTML with Nokogiri](http://ruby.bastardsbook.com/chapters/html-parsing/)
+* [CSS selectors](http://css.maxdesign.com.au/selectutorial/)
+* [Command-line arguments in Ruby](http://alvinalexander.com/blog/post/ruby/how-read-* command-line-arguments-args-script-program)
+* [OpenURI](http://www.ruby-doc.org/stdlib-1.9.3/libdoc/open-uri/rdoc/OpenURI.html)
+
+
