@@ -113,7 +113,8 @@ We now need code which does the following:
 2. Parses the Hacker News HTML
 3. Creates a new `Comment` object for each comment in the HTML, adding it to the `Post` object in (1)
 
-Ship it!
+### Testing
+Your tests should focus on proving that, given some HTML, your code properly scrapes and populates objects.
 
 
 ###Release 1: Objectify a live Hacker News page 
