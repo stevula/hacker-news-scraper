@@ -57,7 +57,7 @@ doc = Nokogiri::HTML(File.open('post.html'))
 
 Make sure you're in *the same directory as `post.html`*.
 
-What does the Nokogiri object itself look like?  Don't worry about having to wade through it's innards, but reading [Parsing HTML with Nokogiri](http://ruby.bastardsbook.com/chapters/html-parsing/) from [The Bastard's Book of Ruby](http://ruby.bastardsbook.com/) can give you a feel for how Nokogiri works.
+What does the Nokogiri object itself look like?  Don't worry about having to wade through its innards, but reading [Parsing HTML with Nokogiri](http://ruby.bastardsbook.com/chapters/html-parsing/) from [The Bastard's Book of Ruby](http://ruby.bastardsbook.com/) can give you a feel for how Nokogiri works.
 
 Here's an example of how you'd write a method that takes a Nokogiri document of a Hacker News thread as input and return an array of commentor usernames:
 
