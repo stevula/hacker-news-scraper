@@ -149,7 +149,7 @@ Combine these two facts to let the user pass a URL into your program, parse the 
 * [Nokogiri documentation about parsing an HTML document](http://nokogiri.org/tutorials/parsing_an_html_xml_document.html)
 * [Parsing HTML with Nokogiri](http://ruby.bastardsbook.com/chapters/html-parsing/)
 * [CSS selectors](http://css.maxdesign.com.au/selectutorial/)
-* [Command-line arguments in Ruby](http://alvinalexander.com/blog/post/ruby/how-read-* command-line-arguments-args-script-program)
+* [Command-line arguments in Ruby](http://alvinalexander.com/blog/post/ruby/how-read-command-line-arguments-args-script-program)
 * [OpenURI](http://www.ruby-doc.org/stdlib-1.9.3/libdoc/open-uri/rdoc/OpenURI.html)
 
 
