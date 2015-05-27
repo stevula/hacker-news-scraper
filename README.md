@@ -1,13 +1,13 @@
 # Scraping Hacker News
- 
-##Learning Competencies 
+
+##Learning Competencies
 - Install a gem
-- Use the Nokogiri gem to parse CSS elements 
+- Use the Nokogiri gem to parse CSS elements
 - Map data within a given object (ie Nokogiri object) to a customized object
 - Use ARGV to take in user input from the command line
 - Use the OpenURI built-in module to open and read live URLs
 
-##Summary 
+##Summary
 
  We're going to write a simple [Hacker News](http://news.ycombinator.com) scraper.  We have to be polite, though: if we're too aggressive we'll get the DBC network banned.
 
@@ -16,7 +16,7 @@ We're going to build Ruby classes that represents a particular Hacker News comme
 
 ##Releases
 
-###Release 0: Objectifying a static Hacker News page 
+###Release 0: Objectifying a static Hacker News page
 
 #### Save a HTML Page
 
@@ -71,7 +71,7 @@ end
 
 *Remember [CSS selectors](http://css.maxdesign.com.au/selectutorial/)?  You don't need to fully understand all the elements here, but a refresher could help!*
 
-What do these other Nokogiri calls return?  
+What do these other Nokogiri calls return?
 
 ```ruby
 doc.search('.subtext > span:first-child').map { |span| span.inner_text}
@@ -117,7 +117,7 @@ We now need code which does the following:
 Your tests should focus on proving that, given some HTML, your code properly scrapes and populates objects.
 
 
-###Release 1: Objectify a live Hacker News page 
+###Release 1: Objectify a live Hacker News page
 
 #### Command line + parsing the actual Hacker News
 
@@ -143,7 +143,7 @@ puts html_file.read
 
 This captures the html from that URL as a `StringIO` object, which NokoGiri accepts as an argument to `NokoGiri::HTML`.
 
-Combine these two facts to let the user pass a URL into your program, parse the given Hacker News URL into objects, and print out some useful information for the user. 
+Combine these two facts to let the user pass a URL into your program, parse the given Hacker News URL into objects, and print out some useful information for the user.
 
 
 ##Resources
