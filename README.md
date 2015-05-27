@@ -99,7 +99,7 @@ We want two classes: `Post` and `Comment`.  A post has many comments and each co
 Additionally, create two instance methods:
 
 1. `Post#comments` returns all the comments associated with a particular post
-2. `Post#add_comment` takes a `Comment` object as its input and adds it to the comment list.
+2. `Post#add_comment` takes a `Comment` object as its input and adds it to the comment list. This just adds it to the list of comments in your program, it doesn't actually do anything to the hacker news page.
 
 You'll have to design the `Comment` object yourself.  What attributes and methods should it support and why?
 
