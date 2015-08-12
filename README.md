@@ -1,4 +1,4 @@
-# Scraping Hacker News
+# From HTML to Ruby Objects
 
 ##Learning Competencies
 - Install a gem
@@ -7,11 +7,29 @@
 - Use ARGV to take in user input from the command line
 - Use the OpenURI built-in module to open and read live URLs
 
-##Summary
+## Summary
+We've been creating custom Ruby objects that have both *state* and *behavior*.  State is the data internal to an object—think instance variables in Ruby.  Behavior is what the object can do, and we think about behavior as the methods to which an object responds.
 
- We're going to write a simple [Hacker News](http://news.ycombinator.com) scraper.  We have to be polite, though: if we're too aggressive we'll get the DBC network banned.
+From where do we get the data that that becomes the state of our objects?  In a [previous challenge][parsing-data-1-csv-in-csv-out-challenge], we've seen that we can create Ruby objects from the data is a CSV file.  As we continue through Dev Bootcamp, we'll be creating objects based on data in a variety of formats:  a simple text file, JSON, a database, etc.
 
-We're going to build Ruby classes that represents a particular Hacker News comment thread.  The main goal is to translate a pre-existing object model &mdash; in this case, Hacker News' model &mdash; into one that's easy for us to manipulate.
+In this challenge, we're going to use HTML as a data source.  We'll take a webpage and parse the markup into Ruby objects.  Extracting information from websites as we'll be doing is known as [web scraping][]. 
+
+We're going to write a web scraper to grab information from [Hacker News][].  We'll translate data from Hacker News comment threads (see [example][HN Comment Thread]) into Ruby objects.  Given the technical challenges that we'll encounter, it will be easy for us to lose focus on our main goal: building custom Ruby objects based on pre-existing data. 
+
+
+### The Nokogiri Gem
+We won't be building an HTML parser ourselves.  Instead, we'll rely on the [Nokogiri][] gem.  It's likely we've never used Nokogiri, and one of the technical challenges we'll face is simply learning how to use this library.  
+
+It might feel like Nokogiri is the focus of this challenge, but it's not.  Nokogiri is a tool to help us get from HTML to our own custom Ruby objects.  We'll be passing HTML to Nokogiri, and it will translate that HTML into its own custom Nokogiri Ruby objects.  We'll take those Nokogiri Ruby objects and convert them into our objects.
+
+
+
+
+
+
+
+
+
 
 
 ##Releases
@@ -19,6 +37,8 @@ We're going to build Ruby classes that represents a particular Hacker News comme
 ###Release 0: Objectifying a static Hacker News page
 
 #### Save a HTML Page
+We have to be polite, though: if we're too aggressive we'll get the DBC network banned.
+
 
 First, we're going to save a specific post as a plain HTML file for us to practice on.  As we're developing a scraper we'll be tempted to hammer the HN servers, which will almost certainly get everyone temporarily banned.  We'll use the local HTML file to get the scraper working before we create a "live" version.
 
@@ -152,5 +172,14 @@ Combine these two facts to let the user pass a URL into your program, parse the 
 * [CSS selectors](http://css.maxdesign.com.au/selectutorial/)
 * [Command-line arguments in Ruby](http://alvinalexander.com/blog/post/ruby/how-read-command-line-arguments-args-script-program)
 * [OpenURI](http://www.ruby-doc.org/stdlib-1.9.3/libdoc/open-uri/rdoc/OpenURI.html)
+
+
+[Hacker News]: http://news.ycombinator.com
+[HN Comment Thread]: https://news.ycombinator.com/item?id=5003980
+[Nokogiri]: https://github.com/sparklemotion/nokogiri
+[parsing-data-1-csv-in-csv-out-challenge]: ../../../parsing-data-1-csv-in-csv-out-challenge
+[web scraping]: https://en.wikipedia.org/wiki/Web_scraping
+
+
 
 
