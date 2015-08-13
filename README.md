@@ -23,6 +23,25 @@ We won't be building an HTML parser ourselves.  Instead, we'll rely on the [Noko
 It might feel like Nokogiri is the focus of this challenge, but it's not.  Nokogiri is a tool to help us get from HTML to our own custom Ruby objects.  We'll be passing HTML to Nokogiri, and it will translate that HTML into its own custom Nokogiri Ruby objects.  We'll take those Nokogiri Ruby objects and convert them into our objects.
 
 
+## Releases
+### Pre-release:  Install the Nokogiri Gem
+```bash
+$ gem list nokogiri
+
+*** LOCAL GEMS ***
+
+nokogiri (1.6.6.2, 1.6.5, 1.6.0)
+```
+*Figure 1*.  Checking to see which, if any, versions of Nokogiri are installed.
+
+Before we begin with this challenge we need to have the Nokogiri gem installed.  It should be installed on the Dev Bootcamp workstations.  If we're working on a personal machine, we can check to see which, if any, versions of Nokogiri are installed (see Figure 1).  If any versions of Nokogiri are installed, they will be listed under the local gems heading.
+
+```
+$ gem install nokogiri
+```
+*Figure 2*.  Installing Nokogiri from the command line.
+
+If no versions of Nokogiri are installed, we'll need to install one (see Figure 2).  Unfortunately, installing Nokogiri does not always go smoothly.  If we run into issues, we should begin troubleshooting by referencing Nokogiri's [installation instructions][Nokogiri installation].  If we still have issues, we should seek help from an instructor.
 
 
 
@@ -32,7 +51,6 @@ It might feel like Nokogiri is the focus of this challenge, but it's not.  Nokog
 
 
 
-##Releases
 
 ###Release 0: Objectifying a static Hacker News page
 
@@ -57,23 +75,6 @@ Visit the Hacker News homepage and click through to a specific post.  If you can
 
 #### Playing around with Nokogiri
 
-First, make sure the `nokogiri` gem is installed.  We'll use this to parse the HTML file.  You can test this by running `irb` and typing
-
-```ruby
-require 'nokogiri'
-```
-
-If you get an error that means Nokogiri is not installed, install it by running this command:
-
-```text
-$ gem install nokogiri
-```
-
-You'll want to have the [Nokogiri documentation about parsing an HTML document](http://nokogiri.org/tutorials/parsing_an_html_xml_document.html) available.  Try this from `irb`:
-
-```ruby
-doc = Nokogiri::HTML(File.open('post.html'))
-```
 
 Make sure you're in *the same directory as `post.html`*.
 
@@ -177,6 +178,7 @@ Combine these two facts to let the user pass a URL into your program, parse the 
 [Hacker News]: http://news.ycombinator.com
 [HN Comment Thread]: https://news.ycombinator.com/item?id=5003980
 [Nokogiri]: https://github.com/sparklemotion/nokogiri
+[Nokogiri installation]: http://www.nokogiri.org/tutorials/installing_nokogiri.html
 [parsing-data-1-csv-in-csv-out-challenge]: ../../../parsing-data-1-csv-in-csv-out-challenge
 [web scraping]: https://en.wikipedia.org/wiki/Web_scraping
 
