@@ -44,7 +44,52 @@ $ gem install nokogiri
 If no versions of Nokogiri are installed, we'll need to install one (see Figure 2).  Unfortunately, installing Nokogiri does not always go smoothly.  If we run into issues, we should begin troubleshooting by referencing Nokogiri's [installation instructions][Nokogiri installation].  If we still have issues, we should seek help from an instructor.
 
 
+### Release 0:  Explore Nokogiri
+Before we begin working with the Hacker News markup, let's first build a little familiarity with Nokogiri.  We'll use Nokogiri to parse the HMTL in the file `html-samples/example.html` into Nokogiri Ruby objects and then explore those objects a bit.
 
+![HTML Tree](readme-assets/html-tree.png)
+
+*Figure 3*. Tree depicting the `<body>` tag in `html-samples/example.html`.
+
+If we look at the file `html-samples/example.html`, we can see that it's a small, simple HTML document.  Let's take a look at the `<body>` tag and the tags that are nested within it.  The `<body>` tag has one child, the `<main>` tag.  And the main tag has three children of its own:  a heading and two paragraphs.  We can think of this as a tree structure (see Figure 3).
+
+When Nokogiri parses HTML, it returns a model of that HTML.  It returns one object, but the object has child objects, and these children have child objects of their own, etc.  When we parse `html-samples/example.html`, we'll get one object to represent the document.  It will have a child node named `'html'` that has a child node named `'body'` that has a child node named `'main'` that has child nodes named `'h1'`, `'p'`, and `'p'`.  It's the same tree structure we saw in Figure 3.
+
+```ruby
+require 'nokogiri'
+# => true
+load 'html_file_to_string.rb'
+# => true
+string_of_html = HTMLFileToString.read('html-samples/example.html')
+# => "<!doctype html><html><head> ... </html>"
+nokogiri_document = Nokogiri.parse(string_of_html)
+# => #<Nokogiri::HTML::Document:0x3fe7de194e38 name="document" children=[ ... ]>
+html_node = nokogiri_document.children.last
+# => #<Nokogiri::XML::Element:0x3fe7de1948c0 name="html" children=[ ... ]>
+body_node = html_node.children.last
+# => => #<Nokogiri::XML::Element:0x3fe7ddda8f90 name="body" children=[ ... ]>
+main_node = body_node.children.first
+# => => #<Nokogiri::XML::Element:0x3fe7ddda8db0 name="main" children=[ ... ]>
+names_of_main_nodes_children = main_node.children.map(&:name)
+# => ["h1", "p", "p"]
+```
+*Figure 4*.  Using Nokogiri to traverse the HTML tree structure.
+
+Let's open up IRB and use Nokogiri to parse our HTML example file; follow the commands displayed in Figure 4.  The first thing we need to do is require the Nokogiri gem.  Now, when we ask Nokogiri to parse HTML for us, one type of argument we can pass is a string.  We're loading and then using a custom object, `HTMLFileToString` to read in a file and convert it into a scrubbed string; Nokogiri will create separate nodes for whitespace characters between tags—even the newline characters—and this object will clean that up for us (see the tests in `spec/html_file_to_string_spec.rb`).
+
+We then ask Nokogiri to parse the scrubbed string for us, and Nokogiri returns a document object to us. With this object, we can begin to traverse the tree of our HTML from the document to the node representing the `<html>` tag to that node's child, and so forth.  Do we understand how to traverse this representation of our HTML from the document object through generations of children down to specific nodes?
+
+```ruby
+paragraphs = nokogiri_document.css('p')
+# => [#<Nokogiri::XML::Element:0x3fe7ddda8874 name="p" ... >, #<Nokogiri::XML::Element:0x3fe7ddda8270 name="p" ... >] 
+```
+*Figure 5*. Selecting all elements that match a CSS selector.
+
+Sometimes we want to search for specific nodes, like all the nodes representing paragraph tags.  We could traverse all the nodes Nokogiri created and find them that way, but Nokogiri provides a more convenient method.  We can use the `#css` method with [CSS selectors][] to retrieve a set of all the nodes that match the selector.
+
+In Figure 5, we select a set of all the Nokogiri objects that represent paragraph tags.  Let's grab some other elements.  Can we grab a set of all the objects with the class `text`?
+
+We've walked through the basics of working with Nokogiri.  We'll learn some more as we work through this challenge.  If we get stuck, we can always return to IRB and/or use a debugger to explore the objects Nokogiri creates for us.  In addition, we can search for references online, such as The Bastard's Book of Ruby guide to [parsing HTML with Nokogiri][BBR Guide].
 
 
 
@@ -73,12 +118,6 @@ Visit the Hacker News homepage and click through to a specific post.  If you can
 
    This will create a `post.html` file which contains the HTML from the URL you entered.  You're free to enter another URL.
 
-#### Playing around with Nokogiri
-
-
-Make sure you're in *the same directory as `post.html`*.
-
-What does the Nokogiri object itself look like?  Don't worry about having to wade through its innards, but reading [Parsing HTML with Nokogiri](http://ruby.bastardsbook.com/chapters/html-parsing/) from [The Bastard's Book of Ruby](http://ruby.bastardsbook.com/) can give you a feel for how Nokogiri works.
 
 Here's an example of how you'd write a method that takes a Nokogiri document of a Hacker News thread as input and return an array of commentor usernames:
 
@@ -89,8 +128,6 @@ def extract_usernames(doc)
   end
 end
 ```
-
-*Remember [CSS selectors](http://css.maxdesign.com.au/selectutorial/)?  You don't need to fully understand all the elements here, but a refresher could help!*
 
 What do these other Nokogiri calls return?
 
@@ -175,6 +212,8 @@ Combine these two facts to let the user pass a URL into your program, parse the 
 * [OpenURI](http://www.ruby-doc.org/stdlib-1.9.3/libdoc/open-uri/rdoc/OpenURI.html)
 
 
+[BBR Guide]: http://ruby.bastardsbook.com/chapters/html-parsing/
+[CSS selectors]: https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Getting_started/Selectors
 [Hacker News]: http://news.ycombinator.com
 [HN Comment Thread]: https://news.ycombinator.com/item?id=5003980
 [Nokogiri]: https://github.com/sparklemotion/nokogiri
