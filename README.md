@@ -92,6 +92,25 @@ In Figure 5, we select a set of all the Nokogiri objects that represent paragrap
 We've walked through the basics of working with Nokogiri.  We'll learn some more as we work through this challenge.  If we get stuck, we can always return to IRB and/or use a debugger to explore the objects Nokogiri creates for us.  In addition, we can search for references online, such as The Bastard's Book of Ruby guide to [parsing HTML with Nokogiri][BBR Guide].
 
 
+### Release 1: Modeling Posts and Comments
+Before we can parse our HTML into Ruby objects, we have to design the Ruby objects.  We're going to write two classes that will represent a Hacker News comment thread:  a `Post` class and a `Comment` class.
+
+If we take a look at a [comment thread][HN Comment Thread] on Hacker News, we'll see that users can post a link to another webpage.  And, we can gather information about the post:  the title, the URL to the other webpage, who posted the link, how many points the post has earned, etc.  We'll also find comments.  And, as with the post, we can find information on each individual comment:  the text of the comment, the username of the commenter, etc.
+
+Test and develop a `Post` and `Comment` class to represent the data seen on Hacker News.  What state should each of them hold?  Do they need any behaviors?
+
+**Requirements**
+- At a minimum, a post should have these attributes ...
+  - title: the title on Hacker News.
+  - url: the URL to which the post points.
+  - points: the number of points the post currently has.
+  - author username: the username of the post's author.
+  - item id: the post's Hacker News item ID.
+- The relationship between posts and comments is such that a post has many comments and an individual comment belongs to one post.  We need to write at least two methods that control a post's behavior relating to its comments:
+  - `Post#comments`: returns the post's collection of comments.
+  - `Post#add_comment`: takes a `Comment` object as its input and adds it to the post's collection of comments. This only affects a post object in our Ruby program, it doesn't do anything to the Hacker News page.
+
+
 
 
 
