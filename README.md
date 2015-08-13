@@ -169,18 +169,6 @@ Make sure you open up the html page in your browser and poke around the source c
 **Choose at least one other attribute to add for your comments class.  What other comment-related data from the html page can you include?  Figure out your own Nokogiri call to pull in the data.**
 
 
-#### Creating Your Object Model
-
-We want two classes: `Post` and `Comment`.  A post has many comments and each comment belongs to exactly one post.  Let's build the `Post` class so it has the following attributes: `title`, `url`, `points`, and `item_id`, corresponding to the title on Hacker News, the URL the post points to, the number of points the post currently has, and the post's Hacker News item ID, respectively.
-
-Additionally, create two instance methods:
-
-1. `Post#comments` returns all the comments associated with a particular post
-2. `Post#add_comment` takes a `Comment` object as its input and adds it to the comment list. This just adds it to the list of comments in your program, it doesn't actually do anything to the hacker news page.
-
-You'll have to design the `Comment` object yourself.  What attributes and methods should it support and why?
-
-We could go deeper and add, e.g., a `User` model, but we'll stop with `Post` and `Comment`.
 
 ### Loading Hacker News Into Objects
 
