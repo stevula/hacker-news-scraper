@@ -5,13 +5,13 @@ We've been creating custom Ruby objects that have both *state* and *behavior*.  
 
 From where do we get the data that that becomes the state of our objects?  In a [previous challenge][parsing-data-1-csv-in-csv-out-challenge], we've seen that we can create Ruby objects from the data is a CSV file.  As we continue through Dev Bootcamp, we'll be creating objects based on data in a variety of formats:  a simple text file, JSON, a database, etc.
 
-In this challenge, we're going to use HTML as a data source.  We'll take a webpage and parse the markup into Ruby objects.  Extracting information from websites as we'll be doing is known as [web scraping][]. 
+In this challenge, we're going to use HTML as a data source.  We'll take a webpage and parse the markup into Ruby objects.  Extracting information from websites as we'll be doing is known as [web scraping][].
 
-We're going to write a web scraper to grab information from [Hacker News][].  We'll translate data from Hacker News comment threads (see [example][HN Comment Thread]) into Ruby objects.  Given the technical challenges that we'll encounter, it will be easy for us to lose focus on our main goal: building custom Ruby objects based on pre-existing data. 
+We're going to write a web scraper to grab information from [Hacker News][].  We'll translate data from Hacker News comment threads (see [example][HN Comment Thread]) into Ruby objects.  Given the technical challenges that we'll encounter, it will be easy for us to lose focus on our main goal: building custom Ruby objects based on pre-existing data.
 
 
 ### The Nokogiri Gem
-We won't be building an HTML parser ourselves.  Instead, we'll rely on the [Nokogiri][] gem.  It's likely we've never used Nokogiri, and one of the technical challenges we'll face is simply learning how to use this library.  
+We won't be building an HTML parser ourselves.  Instead, we'll rely on the [Nokogiri][] gem.  It's likely we've never used Nokogiri, and one of the technical challenges we'll face is simply learning how to use this library.
 
 It might feel like Nokogiri is the focus of this challenge, but it's not.  Nokogiri is a tool to help us get from HTML to our own custom Ruby objects.  We'll be passing HTML to Nokogiri, and it will translate that HTML into its own custom Nokogiri Ruby objects.  We'll take those Nokogiri Ruby objects and convert them into our objects.
 
@@ -74,7 +74,7 @@ We then ask Nokogiri to parse the scrubbed string for us, and Nokogiri returns a
 
 ```ruby
 paragraphs = nokogiri_document.css('p')
-# => [#<Nokogiri::XML::Element:0x3fe7ddda8874 name="p" ... >, #<Nokogiri::XML::Element:0x3fe7ddda8270 name="p" ... >] 
+# => [#<Nokogiri::XML::Element:0x3fe7ddda8874 name="p" ... >, #<Nokogiri::XML::Element:0x3fe7ddda8270 name="p" ... >]
 ```
 *Figure 5*. Selecting all elements that match a CSS selector.
 
@@ -112,8 +112,8 @@ We'll need an object to parse the HTML into our post and comment objects.  Do we
 We'll also want to test that our parsing is working as we expect.  Given a specific set of HTML, the object that does our parsing should create a post object with specific attributes (e.g. title, url, etc.).  The post should also have a specific set of comments.
 
 ```ruby
-# Assume the code in 'html-samples/hacker-news-post.html' 
-# has been parsed into a Nokogiri document object 
+# Assume the code in 'html-samples/hacker-news-post.html'
+# has been parsed into a Nokogiri document object
 # and stored in the variable 'nokogiri_document'.
 
 nokogiri_document.css('.subtext > span:first-child').first.inner_text
@@ -146,7 +146,7 @@ A/B testing mistakes (Hacker News ID: 5003980)
     URL: http://visualwebsiteoptimizer.com/split-testing-blog/seven-ab-testing-mistakes-to-stop-in-2013/
     Author: ankneo
     Points: 53
-  
+
     Comments:
     "I recently implemented A/B testing on a client's site ..."
     - Jasber
@@ -184,13 +184,13 @@ Oxford University Machine Learning Course (Hacker News ID: 10059249)
     URL: https://www.cs.ox.ac.uk/people/nando.defreitas/machinelearning
     Author: jcr
     Points: 63
-  
+
     Comments:
     "What's the barrier to entry like for this? ..."
     - spike021
 
     "Machine Learning is a mathematical discipline, and  ..."
-    - hlfw0rd    
+    - hlfw0rd
 
     continued ...
 ```
