@@ -111,75 +111,44 @@ Test and develop a `Post` and `Comment` class to represent the data seen on Hack
   - `Post#add_comment`: takes a `Comment` object as its input and adds it to the post's collection of comments. This only affects a post object in our Ruby program, it doesn't do anything to the Hacker News page.
 
 
+### Release 2: Hacker News HTML to Post and Comment Objects
+We've explored Nokogiri a bit and have designed `Post` and `Comment` classes.  Now it's time to take some Hacker News HTML and parse it into our Ruby objects.  To avoid repeatedly hitting the Hacker News servers and getting the DBC network temporarily banned, we'll start by scraping an HTML file that we've saved locally (see `html-samples/hacker-news-post.html`).  We will we move on to parsing live webpages once we're able to successfully parse the local file.
 
+We'll need an object to parse the HTML into our post and comment objects.  Do we already have an object that should have that responsibility?  Would it make sense to design a new object to do the parsing?  Let's ensure that we follow object-oriented principles and that we understand and can explain why we're making decisions.
 
-
-
-
-###Release 0: Objectifying a static Hacker News page
-
-#### Save a HTML Page
-We have to be polite, though: if we're too aggressive we'll get the DBC network banned.
-
-
-First, we're going to save a specific post as a plain HTML file for us to practice on.  As we're developing a scraper we'll be tempted to hammer the HN servers, which will almost certainly get everyone temporarily banned.  We'll use the local HTML file to get the scraper working before we create a "live" version.
-
-Note that this implies something about how your class should work: it shouldn't care *how* it gets the HTML.
-
-Visit the Hacker News homepage and click through to a specific post.  If you can't find one, use the [A/B Testing Mistakes](http://news.ycombinator.com/item?id=5003980) post.  You can save the HTML for this page somewhere one of two ways.
-
-1. Right click the page and select "view source."  Copy and paste the HTML into Sublime and save the file.
-2. Alternatively, open Terminal, make a `hn_scraper` directory, `cd` into it, and run the following command:
-
-   ```text
-   $ curl https://news.ycombinator.com/item?id=5003980 > post.html
-   ```
-
-   This will create a `post.html` file which contains the HTML from the URL you entered.  You're free to enter another URL.
-
-
-Here's an example of how you'd write a method that takes a Nokogiri document of a Hacker News thread as input and return an array of commentor usernames:
+We'll also want to test that our parsing is working as we expect.  Given a specific set of HTML, the object that does our parsing should create a post object with specific attributes (e.g. title, url, etc.).  The post should also have a specific set of comments.
 
 ```ruby
-def extract_usernames(doc)
-  doc.search('.comhead > a:first-child').map do |element|
-    element.inner_text
-  end
-end
+# Assume the code in 'html-samples/hacker-news-post.html' 
+# has been parsed into a Nokogiri document object 
+# and stored in the variable 'nokogiri_document'.
+
+nokogiri_document.css('.subtext > span:first-child').first.inner_text
+nokogiri_document.css('.subtext > a:nth-child(3)').first.attributes['href'].value
+nokogiri_document.css('.title > a').first.inner_text
+nokogiri_document.css('.title > a').first['href']
 ```
+*Figure 6*.  Pulling specific pieces of information from a Nokogiri document object.
 
-What do these other Nokogiri calls return?
+One of the challenges in parsing the Hacker News HTML will be how to extract the information that we need.  How do we grab the username of the post's author?  The Hacker News item ID?  How do we get nodes represent all of the comments?  Figure 6 shows some examples for pulling out pieces of information that we'll need to build our objects.  What does each line return?
 
+We'll need to figure out for ourselves how to get the rest of the information.  We should read through the source code to figure out which selectors will lead us to the information we need.
+
+**Tips**
 ```ruby
-doc.search('.subtext > span:first-child').map { |span| span.inner_text}
-
-doc.search('.subtext > a:nth-child(3)').map {|link| link['href'] }
-
-doc.search('.title > a').map { |link| link.inner_text}
-
-doc.search('.title > a').map { |link| link['href']}
-
-doc.search('.comment > font:first-child').map { |font| font.inner_text}
+first_comment = nokogiri_document.css('.default').first
+first_comment.css('.comhead a:first-child')
 ```
+*Figure 7*. Calling the `#css` method on a specific node, not the document object.
 
-What is the data structure?  Can you call ruby methods on the returned data structure?
-
-Make sure you open up the html page in your browser and poke around the source code to see how the page is structured. What do their tags actually look like?  How are those tags represented in the Nokogiri searches?
-
-**Choose at least one other attribute to add for your comments class.  What other comment-related data from the html page can you include?  Figure out your own Nokogiri call to pull in the data.**
+- Each comment in the HTML is wrapped in a tag with the class `default`.
+- When we use the `#css` method to search the document for nodes matching a CSS selector, any match in the document is returned.  We can also call the `#css` method on a specific node, which will narrow our search to the children, grandchildren, etc. of that specific node (see Figure 7).
 
 
+ 
 
-### Loading Hacker News Into Objects
 
-We now need code which does the following:
 
-1. Instantiates a `Post` object
-2. Parses the Hacker News HTML
-3. Creates a new `Comment` object for each comment in the HTML, adding it to the `Post` object in (1)
-
-### Testing
-Your tests should focus on proving that, given some HTML, your code properly scrapes and populates objects.
 
 
 ###Release 1: Objectify a live Hacker News page
