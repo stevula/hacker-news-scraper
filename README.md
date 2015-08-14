@@ -145,55 +145,75 @@ first_comment.css('.comhead a:first-child')
 - When we use the `#css` method to search the document for nodes matching a CSS selector, any match in the document is returned.  We can also call the `#css` method on a specific node, which will narrow our search to the children, grandchildren, etc. of that specific node (see Figure 7).
 
 
- 
-
-
-
-
-
-###Release 1: Objectify a live Hacker News page
-
-#### Command line + parsing the actual Hacker News
-
-We're going to learn two new things: the basics of parsing command-line arguments and how to fetch HTML for a website using Ruby.  We want to end up with a command-line program that works like this:
-
-```text
-$ ruby hn_scraper.rb https://news.ycombinator.com/item?id=5003980
-Post title: XXXXXX
-Number of comments: XXXXX
-... some other statistics we might be interested in -- your choice ...
-$
+### Release 3: Display a Post and its Comments
 ```
-First, [read this blog post about command-line arguments in Ruby](http://alvinalexander.com/blog/post/ruby/how-read-command-line-arguments-args-script-program).  How can you use `ARGV` to get the URL passed in to your Ruby script?
+$ ruby runner.rb
 
-Second, read about Ruby's [OpenURI](http://www.ruby-doc.org/stdlib-1.9.3/libdoc/open-uri/rdoc/OpenURI.html) module.  By requiring `'open-uri'` at the top of your Ruby program, you can use open with a URL:
+A/B testing mistakes (Hacker News ID: 5003980)
+    URL: http://visualwebsiteoptimizer.com/split-testing-blog/seven-ab-testing-mistakes-to-stop-in-2013/
+    Author: ankneo
+    Points: 53
+  
+    Comments:
+    "I recently implemented A/B testing on a client's site ..."
+    - Jasber
 
+    "I did an A/A test, basically testing the same exact page ..."
+    - jfarmer
+
+    continued ...
+```
+*Figure 8*.  Example display of post and comment objects on the command line.
+
+Once we're confident that we're able to parse a Hacker News comment thread into a post with comments, let's display the objects on command line.  Let's update the `runner.rb` file to output a custom display of a Hacker News comment thread (see Figure 8).  For now, we'll just display the local file that we've been working with.
+
+How will we control how posts and comments are rendered on the command line?  Is an object responsible for their presentation?  How can we test that the presentation is what we expect?
+
+*Note:*  Our presentation of a post and comments does not need to match Figure 8.
+
+
+### Release 4: Parse and Display a Live Hacker News Page
 ```ruby
+require 'nokogiri'
 require 'open-uri'
 
-html_file = open('http://www.ruby-doc.org/stdlib-1.9.3/libdoc/open-uri/rdoc/OpenURI.html')
-puts html_file.read
+html_file = open('https://news.ycombinator.com/item?id=5003980')
+nokogiri_document = Nokogiri.parse(html_file)
 ```
+*Figure 9*.  Opening a webpage and passing the contents to Nokogiri.
 
-This captures the html from that URL as a `StringIO` object, which NokoGiri accepts as an argument to `NokoGiri::HTML`.
+Let's parse some live Hacker News pages.  We'll first modify our `runner.rb` file so that we can easily retrieve the contents of a webpage.  In Figure 9, we require Ruby's [`OpenURI`][Open URI] module.  This allows us to capture the HTML from a URL using the `#open` method, which returns an object that the `Nokogiri.parse` method accepts, just as it accepted the string objects we've been passing to it.  Let's require the `OpenURI` module in `runner.rb`.
 
-Combine these two facts to let the user pass a URL into your program, parse the given Hacker News URL into objects, and print out some useful information for the user.
+```
+$ ruby runner.rb https://news.ycombinator.com/item?id=10059249
+
+Oxford University Machine Learning Course (Hacker News ID: 10059249)
+    URL: https://www.cs.ox.ac.uk/people/nando.defreitas/machinelearning
+    Author: jcr
+    Points: 63
+  
+    Comments:
+    "What's the barrier to entry like for this? ..."
+    - spike021
+
+    "Machine Learning is a mathematical discipline, and  ..."
+    - hlfw0rd    
+
+    continued ...
+```
+*Figure 10*.  Parsing a live webpage by passing the URL as a command line argument.
+
+We'll also update our `runner.rb` file to work with command line arguments; we should be familiar with command line arguments and working with `ARGV` from [the ARGV Basics challenge][ruby-drill-argv-basics-challenge].  When we execute `runner.rb`, we should be able to pass the URL of a Hacker News comment thread, and that post and its comments should be printed on the command line (see Figure 10).
 
 
-##Resources
-* [Nokogiri documentation about parsing an HTML document](http://nokogiri.org/tutorials/parsing_an_html_xml_document.html)
-* [Parsing HTML with Nokogiri](http://ruby.bastardsbook.com/chapters/html-parsing/)
-* [CSS selectors](http://css.maxdesign.com.au/selectutorial/)
-* [Command-line arguments in Ruby](http://alvinalexander.com/blog/post/ruby/how-read-command-line-arguments-args-script-program)
-* [OpenURI](http://www.ruby-doc.org/stdlib-1.9.3/libdoc/open-uri/rdoc/OpenURI.html)
-
-
+[ruby-drill-argv-basics-challenge]: ../../../ruby-drill-argv-basics-challenge
 [BBR Guide]: http://ruby.bastardsbook.com/chapters/html-parsing/
 [CSS selectors]: https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Getting_started/Selectors
 [Hacker News]: http://news.ycombinator.com
 [HN Comment Thread]: https://news.ycombinator.com/item?id=5003980
 [Nokogiri]: https://github.com/sparklemotion/nokogiri
 [Nokogiri installation]: http://www.nokogiri.org/tutorials/installing_nokogiri.html
+[Open URI]: http://www.ruby-doc.org/stdlib-1.9.3/libdoc/open-uri/rdoc/OpenURI.html
 [parsing-data-1-csv-in-csv-out-challenge]: ../../../parsing-data-1-csv-in-csv-out-challenge
 [web scraping]: https://en.wikipedia.org/wiki/Web_scraping
 
