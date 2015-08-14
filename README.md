@@ -18,7 +18,7 @@ It might feel like Nokogiri is the focus of this challenge, but it's not.  Nokog
 
 ## Releases
 ### Pre-release:  Install the Nokogiri Gem
-```bash
+```
 $ gem list nokogiri
 
 *** LOCAL GEMS ***
@@ -125,9 +125,9 @@ nokogiri_document.css('.title > a').first['href']
 ```
 *Figure 6*.  Pulling specific pieces of information from a Nokogiri document object.
 
-One of the challenges in parsing the Hacker News HTML will be how to extract the information that we need.  How do we grab the username of the post's author?  The Hacker News item ID?  How do we get nodes represent all of the comments?  Figure 6 shows some examples for pulling out pieces of information that we'll need to build our objects.  What does each line return?
+One of the challenges in parsing the Hacker News HTML will be how to extract the information that we need.  How do we grab the username of the post's author?  The Hacker News item ID?  How do we get nodes representing all of the comments?  Figure 6 shows some examples of pulling out pieces of information that we'll need to build our objects.  What does each line return?
 
-We'll need to figure out for ourselves how to get the rest of the information.  We should read through the source code to figure out which selectors will lead us to the information we need.
+We'll need to figure out for ourselves how to get the rest of the information.  We should read through the HTML source code to figure out which selectors will lead us to the information we need.
 
 **Tips**
 ```ruby
@@ -160,7 +160,7 @@ A/B testing mistakes (Hacker News ID: 5003980)
 ```
 *Figure 8*.  Example display of post and comment objects on the command line.
 
-Once we're confident that we're able to parse a Hacker News comment thread into a post with comments, let's display the objects on command line.  Let's update the `runner.rb` file to output a custom display of a Hacker News comment thread (see Figure 8).  For now, we'll just display the local file that we've been working with.
+Once we're confident that we're able to parse a Hacker News comment thread into a post with comments, let's display the objects on the command line.  Let's update the `runner.rb` file to output a custom display of a Hacker News comment thread (see Figure 8).  For now, we'll just display the local file with which we've been working.
 
 How will we control how posts and comments are rendered on the command line?  Is an object responsible for their presentation?  How can we test that the presentation is what we expect?
 
