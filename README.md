@@ -51,11 +51,13 @@ When Nokogiri parses HTML, it returns a model of that HTML.  It returns one obje
 ```ruby
 require 'nokogiri'
 # => true
-load 'html_file_to_string.rb'
+load 'html_whitespace_cleaner.rb'
 # => true
-string_of_html = HTMLFileToString.read('html-samples/example.html')
+html = File.read('html-samples/example.html')
+# => "<!doctype html>\n  <html>\n  <head> ... </html>\n"
+clean_html = HTMLWhitespaceCleaner.clean(html)
 # => "<!doctype html><html><head> ... </html>"
-nokogiri_document = Nokogiri.parse(string_of_html)
+nokogiri_document = Nokogiri.parse(clean_html)
 # => #<Nokogiri::HTML::Document:0x3fe7de194e38 name="document" children=[ ... ]>
 html_node = nokogiri_document.children.last
 # => #<Nokogiri::XML::Element:0x3fe7de1948c0 name="html" children=[ ... ]>
@@ -68,7 +70,7 @@ names_of_main_nodes_children = main_node.children.map(&:name)
 ```
 *Figure 4*.  Using Nokogiri to traverse the HTML tree structure.
 
-Let's open up IRB and use Nokogiri to parse our HTML example file; follow the commands displayed in Figure 4.  The first thing we need to do is require the Nokogiri gem.  Now, when we ask Nokogiri to parse HTML for us, one type of argument we can pass is a string.  We're loading and then using a custom object, `HTMLFileToString` to read in a file and convert it into a scrubbed string; Nokogiri will create separate nodes for whitespace characters between tags—even the newline characters—and this object will clean that up for us (see the tests in `spec/html_file_to_string_spec.rb`).
+Let's open up IRB and use Nokogiri to parse our HTML example file; follow the commands displayed in Figure 4.  The first thing we need to do is require the Nokogiri gem.  Now, when we ask Nokogiri to parse HTML for us, one type of argument we can pass is a string, which we read from our example HTML file.  We're also loading and then using a custom object, `HTMLWhitespaceCleaner` that will scrub a string to make it more Nokogiri friendly; for example, Nokogiri will create separate nodes for whitespace characters between tags—even the newline characters—and this object will clean that up for us (see the tests in `spec/html_whitespace_cleaner_spec.rb`).
 
 We then ask Nokogiri to parse the scrubbed string for us, and Nokogiri returns a document object to us. With this object, we can begin to traverse the tree of our HTML from the document to the node representing the `<html>` tag to that node's child, and so forth.  Do we understand how to traverse this representation of our HTML from the document object through generations of children down to specific nodes?
 
