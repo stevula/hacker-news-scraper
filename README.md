@@ -1,12 +1,5 @@
 # From HTML to Ruby Objects
 
-##Learning Competencies
-- Install a gem
-- Use the Nokogiri gem to parse CSS elements
-- Map data within a given object (ie Nokogiri object) to a customized object
-- Use ARGV to take in user input from the command line
-- Use the OpenURI built-in module to open and read live URLs
-
 ## Summary
 We've been creating custom Ruby objects that have both *state* and *behavior*.  State is the data internal to an object—think instance variables in Ruby.  Behavior is what the object can do, and we think about behavior as the methods to which an object responds.
 
