@@ -206,6 +206,14 @@ Oxford University Machine Learning Course (Hacker News ID: 10059249)
 We'll also update our `runner.rb` file to work with command line arguments; we should be familiar with command line arguments and working with `ARGV` from [the ARGV Basics challenge][ruby-drill-argv-basics-challenge].  When we execute `runner.rb`, we should be able to pass the URL of a Hacker News comment thread, and that post and its comments should be printed on the command line (see Figure 10).
 
 
+## Conclusion
+There are a lot of pieces to the challenge.  Let's think about what we've done in the end.  We've taken information encoded in HTML on Hacker News and converted it into a format readable on the command line.  Essentially, we have simple Hacker News command line reader.
+
+In order to present the information on the command line, we had to first create Ruby objects to represent the post and comments on a Hacker News page.  Representing the post and objects in our own objects gave us control over their behaviors, and allowed us to manipulate them as we needed.  We'll be continuing this pattern of loading data into Ruby objects that we can use.
+
+In addition, we were able to practice learning how to use a new library—in this case, Nokogiri.
+
+
 [ruby-drill-argv-basics-challenge]: ../../../ruby-drill-argv-basics-challenge
 [BBR Guide]: http://ruby.bastardsbook.com/chapters/html-parsing/
 [CSS selectors]: https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Getting_started/Selectors
