@@ -11,7 +11,7 @@ We're going to write a web scraper to grab information from [Hacker News][].  We
 
 
 ### The Nokogiri Gem
-We won't be building an HTML parser ourselves.  Instead, we'll rely on the [Nokogiri][] gem.  It's likely we've never used Nokogiri, and one of the technical challenges we'll face is simply learning how to use this library.
+We won't be building an HTML parser ourselves.  Instead, we'll rely on the [Nokogiri][] gem.  Nokogiri is likely an unfamiliar tool, and one of the technical challenges we'll face is simply learning how to use it.
 
 It might feel like Nokogiri is the focus of this challenge, but it's not.  Nokogiri is a tool to help us get from HTML to our own custom Ruby objects.  We'll be passing HTML to Nokogiri, and it will translate that HTML into its own custom Nokogiri Ruby objects.  We'll take those Nokogiri Ruby objects and convert them into our objects.
 
@@ -202,7 +202,7 @@ We'll also update our `runner.rb` file to work with command line arguments; we s
 
 
 ## Conclusion
-There are a lot of pieces to the challenge.  Let's think about what we've done in the end.  We've taken information encoded in HTML on Hacker News and converted it into a format readable on the command line.  Essentially, we have simple Hacker News command line reader.
+There are a lot of pieces to this challenge, so let's think about what we've done.  We've taken information encoded in HTML on Hacker News and converted it into a format readable on the command line.  Essentially, we have simple Hacker News command line reader.
 
 In order to present the information on the command line, we had to first create Ruby objects to represent the post and comments on a Hacker News page.  Representing the post and objects in our own objects gave us control over their behaviors, and allowed us to manipulate them as we needed.  We'll be continuing this pattern of loading data into Ruby objects that we can use.
 
