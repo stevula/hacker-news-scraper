@@ -13,7 +13,7 @@ We're going to write a web scraper to grab information from [Hacker News][].  We
 ### The Nokogiri Gem
 We won't be building an HTML parser ourselves.  Instead, we'll rely on the [Nokogiri][] gem.  Nokogiri is likely an unfamiliar tool, and one of the technical challenges we'll face is simply learning how to use it.
 
-It might feel like Nokogiri is the focus of this challenge, but it's not.  Nokogiri is a tool to help us get from HTML to our own custom Ruby objects.  We'll be passing HTML to Nokogiri, and it will translate that HTML into its own custom Nokogiri Ruby objects.  We'll take those Nokogiri Ruby objects and convert them into our objects.
+It might feel like Nokogiri is the focus of this challenge, but it's not.  Nokogiri is a tool that we'll use to parse HTML.  We'll be passing HTML to Nokogiri, and it will translate that HTML into its own custom Nokogiri Ruby objects.  We'll take those Nokogiri Ruby objects and convert them into our objects.
 
 
 ## Releases
