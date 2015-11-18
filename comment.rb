@@ -10,8 +10,8 @@ class Comment
   private
 
   def get_author
-    all_comheads = @document.css('.comhead a')
-    comment = all_comheads[@comment_number * 2].children.text
+    all_comheads = @document.css('.comhead a:first-child')
+    comment = all_comheads[1 + @comment_number].children.text
   end
 
   def get_text

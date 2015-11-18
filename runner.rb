@@ -5,21 +5,19 @@ require_relative 'post'
 require_relative 'comment'
 
 require 'nokogiri'
+require 'open-uri'
 
-html = File.read('html-samples/hacker-news-post.html')
-clean_html = HTMLWhitespaceCleaner.clean(html)
-nokogiri_document = Nokogiri.parse(clean_html)
+html = open(ARGV[0])
+
+nokogiri_document = Nokogiri.parse(html)
 
 post = Post.new(nokogiri_document)
 
-comment_1 = Comment.new(nokogiri_document, 0)
-comment_2 = Comment.new(nokogiri_document, 1)
-comment_3 = Comment.new(nokogiri_document, 2)
-comment_4 = Comment.new(nokogiri_document, 3)
+number_of_comments = nokogiri_document.css('.default .comhead a:first-child').length
 
-post.add_comment(comment_1)
-post.add_comment(comment_2)
-post.add_comment(comment_3)
-post.add_comment(comment_4)
+number_of_comments.times do |i|
+  post.add_comment(Comment.new(nokogiri_document, i))
+end
 
-post.comments.each {|comment_obj| p comment_obj.comment_data}
+post.comments.each {|comment_obj| puts comment_obj.comment_data}
+
