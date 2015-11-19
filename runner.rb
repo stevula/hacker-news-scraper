@@ -19,5 +19,5 @@ number_of_comments.times do |i|
   post.add_comment(Comment.new(nokogiri_document, i))
 end
 
-post.comments.each {|comment_obj| puts comment_obj.comment_data}
+post.comments.each {|comment_obj| puts comment_obj.author, comment_obj.text}
 

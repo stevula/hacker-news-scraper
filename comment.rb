@@ -1,10 +1,11 @@
 class Comment
-  attr_reader :comment_data
+  attr_reader :comment_data, :author, :text
 
   def initialize(nokogiri_obj, comment_number)
     @document = nokogiri_obj
     @comment_number = comment_number
-    @comment_data = {get_author => get_text}
+    @author = get_author
+    @text = get_text
   end
 
   private
